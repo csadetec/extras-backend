@@ -11,11 +11,10 @@ class AuthController {
     token.user = await User.findBy('email', email)
 
     return token
-    //token.user = await f
-    
-    //return data
-    
+      
   }
+
+
 }
 
 module.exports = AuthController

@@ -18,7 +18,13 @@ const Route = use('Route')
 Route.get('/', () => {
   return { greeting: 'Hello world in JSON' }
 })
+Route.post('/login', 'AuthController.login')
+
 Route.group(() => {
   Route.resource('/users', 'UserController').apiOnly()
+  Route.resource('/profiles', 'ProfileController').apiOnly()
+  //Route.resource('/employees', 'EmployeeController').apiOnly()
+  Route.get('/employees', 'EmployeeController.index')
+  Route.get('/employees/:rc', 'EmployeeController.show')
+  
 }).middleware('auth')
-Route.post('/login', 'AuthController.login')
