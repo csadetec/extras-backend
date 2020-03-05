@@ -24,6 +24,8 @@ Route.group(() => {
   Route.resource('/users', 'UserController').apiOnly()
   Route.resource('/profiles', 'ProfileController').apiOnly()
   //Route.resource('/employees', 'EmployeeController').apiOnly()
+  Route.resource('/reasons', 'ReasonController').apiOnly()
+
   Route.get('/employees', 'EmployeeController.index')
   Route.get('/employees/:rc', 'EmployeeController.show')
   
