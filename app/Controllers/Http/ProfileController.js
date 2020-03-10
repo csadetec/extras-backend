@@ -39,11 +39,11 @@ class ProfileController {
     const data = request.only(['name'])
 
     await Profile.query()
-      .where('id', id)
+      .where({id})
       .update(data)
     
     await User.query()
-      .where('profile_id', id)
+      .where({profile_id: id})
       .update({profile_name: data.name })
 
     return await Profile.find(id)

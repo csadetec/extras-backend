@@ -6,9 +6,10 @@ const Hash = use('Hash')
 class UserController {
 
   async index ({ request, response, view }) {
-    const users = User.all()
-
-    return users
+    
+    return await  User.query()
+      .orderBy('name', 'asc')
+      .fetch()
   }
 
   async store ({ request, response }) {
@@ -28,7 +29,7 @@ class UserController {
   }
 
   async show ({ params, request, response, view }) {
-    
+        
     return await User.find(params.id)
 
   }

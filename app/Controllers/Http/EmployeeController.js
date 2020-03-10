@@ -11,7 +11,6 @@ class EmployeeController {
       .fetch()
   }
 
-
   async store ({ request, response }) {
     
   }
@@ -23,14 +22,6 @@ class EmployeeController {
   async update ({ params, request, response }) {
   }
 
-  /**
-   * Delete a employee with id.
-   * DELETE employees/:id
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   */
   async destroy ({ params, request, response }) {
   }
 }
