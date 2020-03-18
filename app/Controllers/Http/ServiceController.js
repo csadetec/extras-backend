@@ -1,6 +1,9 @@
 'use strict'
 const Service = use('App/Models/Service')
 const Reason = use('App/Models/Reason')
+const ServiceEmployee = use('App/Models/ServiceEmployee')
+const ServiceEmployeeController = use('/ServiceEmployeeController')
+const sc = new ServiceEmployeeController()
 
 class ServiceController {
 
@@ -9,47 +12,70 @@ class ServiceController {
     return await Service.query()
       .orderBy('date', 'asc')
       .with('user')
+      .with('employees')
       .fetch()
   }
 
   async store ({ request, response, auth }) {
     const data = request.only(['date', 'start', 'end', 'confirm', 'reason_name'])
-    const {employees} = request.only(['employees'])
-
-    return employees
-
+    const {employees} = request.only(['employees'])    
     const reason = await Reason.findBy({name:data.reason_name})
     if(!reason){
       return {message:'Natureza do Serviço não cadastrado!'}
     }
-    
-    return await Service.create({...data, user_id:auth.user.id})
 
+    let service = await Service.create({...data, user_id:auth.user.id})
+
+    const find = await sc.store(service.id, employees)
+    if(find){
+      service = await Service.find(service.id)
+      await service.delete()
+      return {find, status:401}
+    }
+    service.employees = await service.employees().fetch()
+    return service
   }
 
 
   async show ({ params, request, response, view }) {
 
     const {id} = params
-    const service =  await Service.find(params.id)
-    service.user = await service.user().fetch()
-
-    return service
+    return await Service.query()
+      .where({id})
+      .with('user')
+      .with('employees')
+      .fetch()
+      //.on('console.log')
 
   }
 
+  async update ({ params, request, response, auth }) {
+    const data = request.only(['date', 'start', 'end', 'confirm', 'reason_name'])
+    const {id} = params
+    const {employees} = request.only(['employees'])
 
-  async update ({ params, request, response }) {
+    const find =  await sc.store(auth.user.id, id, employees)
+    if(find){
+      return {find, status:401}
+    }
+
+    await Service.query()
+      .where({id})
+      .update(data)
+
+    return await Service.query()
+      .where({id})
+      .with('employees')
+      .fetch()
+    /** */
   }
 
   async destroy ({ params, request, response }) {
     const {id} = params
-    const service = await Service.find(id)
-    if(!service){
-      return {message:'Serviço não Cadastrado'}
-    }
-
-    return await service.delete()
+    
+    const service =  await Service.find(id)
+    await ServiceEmployee.query().where({service_id:id}).delete()
+    await service.delete()
   }
 }
 

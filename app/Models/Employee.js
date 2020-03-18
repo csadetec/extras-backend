@@ -4,6 +4,9 @@
 const Model = use('Model')
 
 class Employee extends Model {
+  static get hidden () {
+    return ['admission', 'cpf', 'created_at', 'updated_at']
+  }
 }
 
 module.exports = Employee

@@ -23,11 +23,10 @@ Route.post('/login', 'AuthController.login')
 Route.group(() => {
   Route.resource('/users', 'UserController').apiOnly()
   Route.resource('/profiles', 'ProfileController').apiOnly()
-  //Route.resource('/employees', 'EmployeeController').apiOnly()
+  Route.resource('/employees', 'EmployeeController').apiOnly()
   Route.resource('/reasons', 'ReasonController').apiOnly()
+  Route.resource('/services/employees', 'ServiceEmployeeController').apiOnly()
+  Route.get('/services/employees/:start/:end', 'ServiceEmployeeController.filter')
   Route.resource('/services', 'ServiceController').apiOnly()
 
-  Route.get('/employees', 'EmployeeController.index')
-  Route.get('/employees/:rc', 'EmployeeController.show')
-  
 }).middleware('auth')
