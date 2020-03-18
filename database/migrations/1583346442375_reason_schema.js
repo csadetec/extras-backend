@@ -7,7 +7,8 @@ class ReasonSchema extends Schema {
   up () {
     this.create('reasons', (table) => {
       table.increments()
-      table.string('name', 150).notNullable()
+      table.string('name', 150).notNullable().unique()
+      table.string('follow', 150).notNullable()
       table.timestamps()
     })
   }

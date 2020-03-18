@@ -13,7 +13,6 @@ class ServiceSchema extends Schema {
       table.integer('user_id').notNullable()
       table.boolean('confirm').notNullable()
       table.string('reason_name', 150).notNullable()
-      table.integer('reason_id').notNullable()
       table.timestamps()
     })
   }

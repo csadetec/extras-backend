@@ -13,9 +13,9 @@ class UserController {
   }
 
   async store ({ request, response }) {
-    const data = request.only(['email', 'password', 'name', 'profile_id'])
+    const data = request.only(['email', 'password', 'name', 'profile_name'])
 
-    const profile = await Profile.find(data.profile_id)
+    const profile = await Profile.findBy({name:data.profile_name})
     if(!profile){
       return { message:'Perfil não cadastrado '}
     }
@@ -37,9 +37,9 @@ class UserController {
 
   async update ({ params, request, response }) {
     const {id} = params
-    const data = request.only(['email', 'name', 'profile_id'])
+    const data = request.only(['email', 'name', 'profile_name'])
     
-    const profile = await Profile.find(data.profile_id)
+    const profile = await Profile.findBy({name:data.profile_name})
     if(!profile){
       return {message:'Perfil não cadastrado'}
     }

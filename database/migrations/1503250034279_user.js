@@ -11,7 +11,6 @@ class UserSchema extends Schema {
       table.string('password', 60).notNullable()
       table.string('name', 150).notNullable()
       table.string('profile_name', 150).notNullable()
-      table.integer('profile_id').notNullable()
       table.timestamps()
     })
   }

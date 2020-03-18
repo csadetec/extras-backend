@@ -14,51 +14,37 @@ class ReasonController {
   }
 
   async store ({ request, response }) {
+    const data = request.only(['name'])
+
+    const reason = await Reason.findBy({name:data.name})
+    if(reason){
+      return {message:`${reason.name} já foi cadastrado`}
+    }
+
+    return await Reason.create(data)
+
   }
 
-  /**
-   * Display a single reason.
-   * GET reasons/:id
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
   async show ({ params, request, response, view }) {
+    
+    return await Reason.find(params.id)
+
   }
 
-  /**
-   * Render a form to update an existing reason.
-   * GET reasons/:id/edit
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
-  async edit ({ params, request, response, view }) {
-  }
-
-  /**
-   * Update reason details.
-   * PUT or PATCH reasons/:id
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   */
   async update ({ params, request, response }) {
+    
+    const {id} = params
+    const data = request.only(['name'])
+
+    await Reason.query()
+      .where({id})
+      .update(data)
+
+    return await Reason.find(id)
+
   }
 
-  /**
-   * Delete a reason with id.
-   * DELETE reasons/:id
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   */
+
   async destroy ({ params, request, response }) {
   }
 }

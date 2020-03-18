@@ -1,5 +1,6 @@
 'use strict'
 const Service = use('App/Models/Service')
+const Reason = use('App/Models/Reason')
 
 class ServiceController {
 
@@ -7,77 +8,48 @@ class ServiceController {
     
     return await Service.query()
       .orderBy('date', 'asc')
+      .with('user')
       .fetch()
   }
 
+  async store ({ request, response, auth }) {
+    const data = request.only(['date', 'start', 'end', 'confirm', 'reason_name'])
+    const {employees} = request.only(['employees'])
 
-  /**
-   * Render a form to be used for creating a new service.
-   * GET services/create
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
-  async create ({ request, response, view }) {
+    return employees
+
+    const reason = await Reason.findBy({name:data.reason_name})
+    if(!reason){
+      return {message:'Natureza do Serviço não cadastrado!'}
+    }
+    
+    return await Service.create({...data, user_id:auth.user.id})
+
   }
 
-  /**
-   * Create/save a new service.
-   * POST services
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   */
-  async store ({ request, response }) {
-  }
 
-  /**
-   * Display a single service.
-   * GET services/:id
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
   async show ({ params, request, response, view }) {
+
+    const {id} = params
+    const service =  await Service.find(params.id)
+    service.user = await service.user().fetch()
+
+    return service
+
   }
 
-  /**
-   * Render a form to update an existing service.
-   * GET services/:id/edit
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
-  async edit ({ params, request, response, view }) {
-  }
 
-  /**
-   * Update service details.
-   * PUT or PATCH services/:id
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   */
   async update ({ params, request, response }) {
   }
 
-  /**
-   * Delete a service with id.
-   * DELETE services/:id
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   */
   async destroy ({ params, request, response }) {
+    const {id} = params
+    const service = await Service.find(id)
+    if(!service){
+      return {message:'Serviço não Cadastrado'}
+    }
+
+    return await service.delete()
   }
 }
 

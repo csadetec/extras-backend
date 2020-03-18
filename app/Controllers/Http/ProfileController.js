@@ -26,7 +26,6 @@ class ProfileController {
     //return profile
   }
 
-
   async show ({ params }) {
     const {id} = params
     
@@ -37,13 +36,14 @@ class ProfileController {
   async update ({ params, request, response }) {
     const {id} = params
     const data = request.only(['name'])
+    const profile = await Profile.find(id)
 
     await Profile.query()
       .where({id})
       .update(data)
     
     await User.query()
-      .where({profile_id: id})
+      .where({profile_name:profile.name})
       .update({profile_name: data.name })
 
     return await Profile.find(id)
