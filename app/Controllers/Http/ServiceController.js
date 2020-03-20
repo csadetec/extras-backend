@@ -40,13 +40,11 @@ class ServiceController {
   async show ({ params, request, response, view }) {
 
     const {id} = params
-    return await Service.query()
-      .where({id})
-      .with('user')
-      .with('employees')
-      .fetch()
-      //.on('console.log')
-
+    const service = await Service.find(id)
+    service.user = await service.user().fetch()
+    service.employees = await service.employees().fetch()
+    
+    return service
   }
 
   async update ({ params, request, response, auth }) {
