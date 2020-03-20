@@ -34,7 +34,7 @@ class ServiceEmployeeController {
       if (employee) {
         return employee
       }
-      await ServiceEmployee.create({user_id, service_id, employee_id: r.id, reason_name: r.reason_name, date: r.date, start: r.start, end: r.end })
+      await ServiceEmployee.create({user_id, service_id, employee_id: r.id, reason_name: r.reason_name, date: r.date, start: r.start, end: r.end, qtd_hours:r.qtd_hours })
     }
   }
 

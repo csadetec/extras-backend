@@ -11,7 +11,7 @@ class Service extends Model {
     return this
       .belongsToMany('App/Models/Employee')
       .pivotTable('services_employees')
-      .withPivot(['reason_name','start', 'end'])
+      .withPivot(['reason_name','start', 'end', 'qtd_hours'])
   }
 }
 
