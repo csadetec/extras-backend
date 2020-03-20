@@ -17,12 +17,12 @@ class UserController {
 
     const profile = await Profile.findBy({name:data.profile_name})
     if(!profile){
-      return { message:'Perfil não cadastrado '}
+      return { message:'Perfil não cadastrado!'}
     }
 
     const user = await User.findBy('email', data.email)
     if(user){
-      return {message:'Email já cadastrado'}
+      return {message:'Email já cadastrado!'}
     }
 
     return await User.create({...data, profile_name:profile.name})
