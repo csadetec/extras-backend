@@ -22,18 +22,18 @@ class ServiceEmployeeController {
       /** */
   }
 
-  async store(user_id, service_id, employees,  ) {
+  async store(user_id, service_id, date, employees ) {
 
-    
+   
     await ServiceEmployee.query()
       .where({ service_id })
       .delete()
     for (let r of employees) {
-      const employee = await this.availability(r.id, r.date, r.start, r.end)
+      const employee = await this.availability(r.id, date, r.start, r.end)
       if (employee) {
         return employee
       }
-      await ServiceEmployee.create({user_id, service_id, employee_id: r.id, reason_name: r.reason_name, date: r.date, start: r.start, end: r.end, qtd_hours:r.qtd_hours })
+      await ServiceEmployee.create({user_id, service_id, employee_id: r.id, reason_name: r.reason_name, date, start: r.start, end: r.end, qtd_hours:r.qtd_hours })
     }
   }
 

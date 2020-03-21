@@ -17,7 +17,7 @@ class ServiceController {
   }
 
   async store ({ request, response, auth }) {
-    const data = request.only(['date', 'start', 'end', 'confirm', 'reason_name'])
+    const data = request.only(['date', 'start', 'end', 'confirm', 'reason_name', 'obs'])
     const {employees} = request.only(['employees'])    
     const reason = await Reason.findBy({name:data.reason_name})
     if(!reason){
@@ -26,7 +26,7 @@ class ServiceController {
 
     let service = await Service.create({...data, user_id:auth.user.id})
 
-    const find = await sc.store(auth.user.id, service.id, employees)
+    const find = await sc.store(auth.user.id, service.id, data.date, employees)
     if(find){
       service = await Service.find(service.id)
       await service.delete()
@@ -48,11 +48,11 @@ class ServiceController {
   }
 
   async update ({ params, request, response, auth }) {
-    const data = request.only(['date', 'start', 'end', 'confirm', 'reason_name'])
+    const data = request.only(['date', 'start', 'end', 'confirm', 'reason_name', 'obs'])
     const {id} = params
     const {employees} = request.only(['employees'])
 
-    const find =  await sc.store(auth.user.id, id, employees)
+    const find =  await sc.store(auth.user.id, id, data.date, employees)
    
     if(find){
       return {status:401, find}
