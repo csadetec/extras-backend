@@ -24,12 +24,11 @@ class ServiceEmployeeController {
 
   async store(user_id, service_id, employees,  ) {
 
+    
     await ServiceEmployee.query()
       .where({ service_id })
       .delete()
-      
     for (let r of employees) {
-      
       const employee = await this.availability(r.id, r.date, r.start, r.end)
       if (employee) {
         return employee
@@ -45,6 +44,7 @@ class ServiceEmployeeController {
     if(!employee){
       return false    
     }
+    //if(employee.start)
     if(employee.start <= start && start <= employee.end){
       return employee
     } 
