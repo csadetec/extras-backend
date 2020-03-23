@@ -8,8 +8,10 @@ class ServiceEmployeeController {
     const {start, end} = params 
 
     return await ServiceEmployee.query()
-      .orderBy('date', 'asc')
+      .select(['employee_id', 'service_id', 'reason_name', 'date', 'qtd_hours'])
       .with('employee')
+      .leftJoin('employees', 'services_employees.employee_id', 'employees.id')
+      .orderBy('employees.name', 'asc')
       .fetch()
       /** */
   }
