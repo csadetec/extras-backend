@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <!---
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.11.0/css/mdb.min.css" rel="stylesheet">
+  <!-- -->
+  <title>teste </title>
+
+  <style>
+      * {
+    font-family: Roboto, sans-serif;
+    font-size: 8px;
+  }
+
+  div {
+    width: 85%;
+    margin: 40px auto;
+  }
+
+  table {
+    border-collapse: collapse;
+    width: 100%;
+  }
+
+  th,
+  td {
+
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-right: 5px ;
+  }
+  div#assinatura{
+    margin-top: 30px;
+    width: 50%;
+    text-align:center;
+
+  }
+  </style>
+
+</head>
+
+<body>
+  <div class="container">
+    <table class="table">
+      <thead>
+        <th scope="col">Nº</th>
+        <th scope="col">NOME</th>
+        <th scope="col">MOTIVO</th>
+        <th scope="col">DATE</th>
+        <!---
+        <th scope="col">INÍCIO</th>
+        <th scope="col">FIM</th>
+        <!-- -->
+        <th scope="col">QTD. HORAS</th>
+      </thead>
+      <tbody>
+        @each(r in reports)
+        <tr>
+          <td>{{$loop.index+1}}</td>
+          <td> {{ r.employee.name }}</td>
+          <td>{{ r.reason_name }}</td>
+          <td>{{r.date}}</td>
+          <!--
+          <td>{{ r.start }}</td>
+          <td>{{ r.end }}</td>
+          <!-- -->
+          <td>{{r.qtd_hours}}</td>
+
+        </tr>
+        @endeach
+      </tbody>
+    </table>
+
+  </div>
+  <div id="assinatura">
+    <hr>
+    Assinatura
+  </div>
+  
+</body>
+
+</html>

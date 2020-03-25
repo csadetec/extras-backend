@@ -26,7 +26,13 @@ Route.group(() => {
   Route.resource('/employees', 'EmployeeController').apiOnly()
   Route.resource('/reasons', 'ReasonController').apiOnly()
   Route.resource('/services/employees', 'ServiceEmployeeController').apiOnly()
+
   Route.get('/services/employees/:start/:end', 'ServiceEmployeeController.filter')
+  
+  Route.post('/pdf', 'PdfController.create')
+  Route.get('/pdf', 'PdfController.get')
+  
   Route.resource('/services', 'ServiceController').apiOnly()
 
 }).middleware('auth')
+Route.get('/services/employees/pdf/:start/:end', 'ServiceEmployeeController.filterPdf')
