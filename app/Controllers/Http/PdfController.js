@@ -13,15 +13,21 @@ class PdfController {
       .select(['employee_id', 'service_id', 'reason_name', 'start', 'end', 'date', 'qtd_hours'])
       .with('employee')
       .leftJoin('employees', 'services_employees.employee_id', 'employees.id')
+      .whereBetween('date', [`${start}`, `${end}`])
       .orderBy('employees.name', 'asc')
       .fetch()
 
     reports = reports.toJSON()
     for (let r in reports) {
-      let date = reports[r].date.split('-')
-      let day = date[2]
-      let month = date[1]
-      reports[r].date = `${day}/${month}`
+      if(reports[r].date){
+        let date = reports[r].date.split('-')
+        let day = date[2]
+        let month = date[1]
+        reports[r].date = `${day}/${month}`
+      }else{
+        reports[r].date  = 'INDEFINIDO'
+
+      }
     }
 
     //return reports
