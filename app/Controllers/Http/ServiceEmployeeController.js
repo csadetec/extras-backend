@@ -8,31 +8,20 @@ class ServiceEmployeeController {
     const { start, end } = params
 
     return await ServiceEmployee.query()
-      .select(['employee_id', 'service_id', 'reason_name', 'date', 'qtd_hours'])
+      .select(['employee_id', 'service_id', 'reason_name', 'date', 'start', 'end', 'qtd_hours'])
       .with('employee')
       .leftJoin('employees', 'services_employees.employee_id', 'employees.id')
+      .whereBetween('date', [`${start}`, `${end}`])
       .orderBy('employees.name', 'asc')
       .fetch()
     /** */
   }
-
-  async filter() {
-    return await ServiceEmployee.query()
-      .whereBetween('date', [start, end])
-      .with('employee')
-      .fetch()
-    /** */
-    //return teste
-  }
-
 
   async show() {
     return { msg: 'method show' }
   }
 
   async store(user_id, service_id, date, employees) {
-
-    /*
     await ServiceEmployee.query()
       .where({ service_id })
       .delete()

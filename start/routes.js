@@ -27,7 +27,7 @@ Route.group(() => {
   Route.resource('/reasons', 'ReasonController').apiOnly()
   Route.resource('/services/employees', 'ServiceEmployeeController').apiOnly()
 
-  Route.get('/services/employees/:start/:end', 'ServiceEmployeeController.filter')
+  Route.get('/services/employees/:start/:end', 'ServiceEmployeeController.index')
   
   Route.post('/pdf', 'PdfController.create')
   Route.get('/pdf', 'PdfController.get')

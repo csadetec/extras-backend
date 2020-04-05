@@ -5,7 +5,7 @@ const Helpers = use('Helpers')
 class PdfController {
 
   async create({ request, response, view }) {
-    const {start, end} = request.only(['start, end'])
+    const {start, end} = request.all()
     const pdf = require('html-pdf')
     //const {formatDate} = require('../../../utils/helpers')
     const fs = require('fs')
@@ -16,6 +16,8 @@ class PdfController {
       .whereBetween('date', [`${start}`, `${end}`])
       .orderBy('employees.name', 'asc')
       .fetch()
+
+    //return reports
 
     reports = reports.toJSON()
     for (let r in reports) {
