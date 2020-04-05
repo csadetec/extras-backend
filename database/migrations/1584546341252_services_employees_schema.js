@@ -11,7 +11,7 @@ class ServicesEmployeesSchema extends Schema {
       table.string('employee_id', 15).notNullable()
       table.integer('user_id').notNullable()
       table.string('reason_name', 30).notNullable()
-      table.string('date', 15).notNullable()
+      table.string('date', 15)
       table.string('start', 10).notNullable()
       table.string('end', 10).notNullable()
       table.string('qtd_hours', 10).notNullable()

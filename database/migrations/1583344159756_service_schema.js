@@ -7,7 +7,7 @@ class ServiceSchema extends Schema {
   up () {
     this.create('services', (table) => {
       table.increments()
-      table.string('date', 15).notNullable()
+      table.string('date', 15)
       table.string('start', 10).notNullable()
       table.string('end', 10).notNullable()
       table.integer('user_id').notNullable()

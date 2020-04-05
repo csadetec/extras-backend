@@ -32,10 +32,11 @@ class ServiceEmployeeController {
 
   async store(user_id, service_id, date, employees) {
 
-
+    /*
     await ServiceEmployee.query()
       .where({ service_id })
       .delete()
+      /** */
     for (let r of employees) {
       const employee = await this.availability(r.id, date, r.start, r.end)
       if (employee) {
@@ -47,8 +48,13 @@ class ServiceEmployeeController {
 
   async availability(employee_id, date, start, end) {
 
+    if(!date){
+      return false
+    }
+
     const employee = await ServiceEmployee.findBy({ employee_id, date })
 
+    //console.log('employee: ', employee)
     if (!employee) {
       return false
     }

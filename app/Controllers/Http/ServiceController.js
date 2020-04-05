@@ -30,6 +30,7 @@ class ServiceController {
     if(find){
       service = await Service.find(service.id)
       await service.delete()
+      await ServiceEmployee.query().where({service_id:service.id}).delete()
       return {find, status:401}
     }
     service.employees = await service.employees().fetch()
