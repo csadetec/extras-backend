@@ -34,9 +34,10 @@ class PdfController {
 
     //return reports
     const html = view.render('pdf', { reports })
-    
-    //pdf.create(html, {  }).toFile(Helpers.tmpPath('download/document.pdf'), (err) => {
-      pdf.create(html, {  }).toFile('download/document.pdf', (err) => {
+
+    //await fs.unlinkSync('./download/document.pdf')
+   // pdf.create(html, {  }).toFile(Helpers.tmpPath('download/document.pdf'), (err) => {
+    pdf.create(html, {  }).toFile('download/document.pdf', (err) => {
       
       if (err) {
         return response.send(Promise.reject())
@@ -47,7 +48,7 @@ class PdfController {
   }
 
   async get({request, response}){
-    return response.attachment(
+    return await response.attachment(
       ('download/document.pdf')
     )
     /*

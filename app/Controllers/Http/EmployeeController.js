@@ -6,6 +6,12 @@ class EmployeeController {
   async index ({ request, response, view }) {
     
     return await Employee.query()
+      .where({function: 'PROFESSOR'})
+      .orWhere({function:'ANALISTA DE ÁREA DO CONHECIMENTO SÊNIOR'})
+      .orderBy('function', 'asc')
+      .orderBy('name', 'asc')
+      .fetch()
+    /*
       .where({description: 'ANALISTAS DE ÁREA DO CONHECIMENTO'})
       .orWhere({description: 'EDUCAÇÃO INFANTIL - 1º PERÍODO'})
       .orWhere({description: 'EDUCAÇÃO INFANTIL - 2º PERÍODO'})
@@ -25,6 +31,7 @@ class EmployeeController {
       .orderBy('description', 'asc')
       .orderBy('name', 'asc')
       .fetch()
+      /**/
   }
 
   async store ({ request, response }) {
