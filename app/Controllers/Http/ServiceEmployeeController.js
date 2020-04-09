@@ -17,8 +17,13 @@ class ServiceEmployeeController {
     /** */
   }
 
-  async show() {
-    return { msg: 'method show' }
+  async indexAll() {
+    return await ServiceEmployee.query()
+      .select(['employee_id', 'service_id', 'reason_name', 'date', 'start', 'end', 'qtd_hours'])
+      .with('employee')
+      .leftJoin('employees', 'services_employees.employee_id', 'employees.id')
+      .orderBy('employees.name', 'asc')
+      .fetch()
   }
 
   async store(user_id, service_id, date, employees) {

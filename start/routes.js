@@ -28,6 +28,7 @@ Route.group(() => {
   Route.resource('/services/employees', 'ServiceEmployeeController').apiOnly()
 
   Route.get('/services/employees/:start/:end', 'ServiceEmployeeController.index')
+  Route.get('/reports', 'ServiceEmployeeController.indexAll')
   
   Route.post('/pdf', 'PdfController.create')
   Route.get('/pdf', 'PdfController.get')
