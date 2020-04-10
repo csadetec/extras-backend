@@ -16,13 +16,15 @@ class UserController {
     const data = request.only(['email', 'password', 'name', 'profile_name'])
 
     const profile = await Profile.findBy({name:data.profile_name})
-    if(!profile){
+    if(!profile)
       return { message:'Perfil não cadastrado!'}
-    }
-
+    
     const user = await User.findBy('email', data.email)
-    if(user){
+    if(user)
       return {message:'Email já cadastrado!'}
+    
+    if(!data.password){
+      return {message:'O campo senha é obrigatório'}
     }
 
     return await User.create({...data, profile_name:profile.name})
