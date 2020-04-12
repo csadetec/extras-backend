@@ -12,6 +12,7 @@ class ServiceEmployeeController {
       .with('employee')
       .leftJoin('employees', 'services_employees.employee_id', 'employees.id')
       .whereBetween('date', [`${start}`, `${end}`])
+      .andWhere({confirm:1})
       .orderBy('employees.name', 'asc')
       .fetch()
     /** */
@@ -26,7 +27,7 @@ class ServiceEmployeeController {
       .fetch()
   }
 
-  async store(user_id, service_id, date, employees) {
+  async store(user_id, service_id, date, employees, confirm) {
     await ServiceEmployee.query()
       .where({ service_id })
       .delete()
@@ -36,7 +37,7 @@ class ServiceEmployeeController {
       if (employee) {
         return employee
       }
-      await ServiceEmployee.create({ user_id, service_id, employee_id: r.id, reason_name: r.reason_name, date, start: r.start, end: r.end, qtd_hours: r.qtd_hours })
+      await ServiceEmployee.create({ user_id, service_id, employee_id: r.id, reason_name: r.reason_name, date, start: r.start, end: r.end, qtd_hours: r.qtd_hours, confirm })
     }
   }
 

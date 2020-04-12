@@ -15,6 +15,7 @@ class ServicesEmployeesSchema extends Schema {
       table.string('start', 10).notNullable()
       table.string('end', 10).notNullable()
       table.string('qtd_hours', 10).notNullable()
+      table.boolean('confirm').notNullable()
       table.timestamps()
     })
   }

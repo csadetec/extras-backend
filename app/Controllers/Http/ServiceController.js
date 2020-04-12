@@ -26,7 +26,7 @@ class ServiceController {
 
     let service = await Service.create({...data, user_id:auth.user.id})
 
-    const find = await sc.store(auth.user.id, service.id, data.date, employees)
+    const find = await sc.store(auth.user.id, service.id, data.date, employees, data.confirm)
     if(find){
       service = await Service.find(service.id)
       await service.delete()
@@ -53,7 +53,7 @@ class ServiceController {
     const {id} = params
     const {employees} = request.only(['employees'])
 
-    const find =  await sc.store(auth.user.id, id, data.date, employees)
+    const find =  await sc.store(auth.user.id, id, data.date, employees, data.confirm)
    
     if(find){
       return {status:401, find}
